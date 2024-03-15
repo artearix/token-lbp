@@ -34,7 +34,7 @@ contract LBPHandler is Ownable {
         }
     }
 
-    function createLBP(uint256 _startTime, uint256 _endTime) external returns (address) {
+    function createLBP(uint256 _startTime, uint256 _endTime) external onlyOwner returns (address) {
         require(!created, "LBPHandler: already created");
 
         IERC20[] memory tokens = new IERC20[](2);
@@ -86,12 +86,12 @@ contract LBPHandler is Ownable {
         return pool;
     }
 
-    function enableSwap() external {
+    function enableSwap() onlyOwner external {
         require(created, "LBPHandler: pool not created yet");
         ILBP(pool).setSwapEnabled(true);
     }
 
-    function finishLBP() external {
+    function finishLBP() onlyOwner external {
         require(block.timestamp >= endTime, "LBPHandler: LBP not finished yet");
 
         uint256 amt = IERC20(pool).balanceOf(address(this));

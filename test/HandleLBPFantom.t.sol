@@ -46,16 +46,16 @@ contract HandlerTest is Test {
 
         vm.warp(block.timestamp + 1 days);
 
-        console.log("BPT balance of handler before", IERC20(pool).balanceOf(address(lbpHandler)));
+        emit log_named_decimal_uint("BPT balance of handler before", IERC20(pool).balanceOf(address(lbpHandler)), 18);
 
         lbpHandler.finishLBP();
 
-        console.log("BPT balance of handler after", IERC20(pool).balanceOf(address(lbpHandler)));
+        emit log_named_decimal_uint("BPT balance of handler after", IERC20(pool).balanceOf(address(lbpHandler)), 18);
 
         address newPair = router.pairFor(address(tokenA), address(tokenB), false);
 
-        console.log("receiver's balance of new lp tokens", IERC20(newPair).balanceOf(address(this)));
-        console.log("new pair's balance A", tokenA.balanceOf(newPair));
-        console.log("new pair's balance B", tokenB.balanceOf(newPair));
+        emit log_named_decimal_uint("receiver's balance of new lp tokens", IERC20(newPair).balanceOf(address(this)), 18);
+        emit log_named_decimal_uint("new pair's balance A", tokenA.balanceOf(newPair), 18);
+        emit log_named_decimal_uint("new pair's balance B", tokenB.balanceOf(newPair), 18);
     }
 }
